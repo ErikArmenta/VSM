@@ -17,11 +17,10 @@ altair>=5.0.0
 # UI Components
 streamlit-option-menu>=0.4.0
 streamlit-extras>=1.4.1
-pygwalker>=0.3.0
 
 # PDF Generation
 fpdf2>=2.8.5
-# kaleido removido - se usa Matplotlib para exportar gráficas al PDF (compatible con Linux/Cloud)
+# kaleido removido - se usa Matplotlib para exportar graficas al PDF (compatible con Linux/Cloud)
 
 # Cloud (Supabase Integration)
 supabase>=2.27.3
