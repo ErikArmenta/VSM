@@ -37,24 +37,23 @@ if df_to_use.empty:
 # ── Cálculo de métricas ───────────────────────────────────────────────────────
 metrics = compute_metrics(df_to_use, available_sec, daily_demand)
 
-# ── Layout principal: 75% izquierda | 25% derecha ────────────────────────────
-col_main, col_panel = st.columns([3, 1])
+# FIX: BUG-5 layout VSM full-width
+# VSM a todo ancho (fuera de columns)
+render_vsm_diagram(df_to_use, metrics)
+st.divider()
 
-with col_main:
-    # Diagrama VSM interactivo full-width
-    render_vsm_diagram(df_to_use, metrics)
+# Gráficas + panel debajo en columns
+col_charts, col_panel = st.columns([3, 1])
 
-    st.divider()
-
-    # Gráficas inferiores: timeline izquierda | KPI derecha
+with col_charts:
     col_tl, col_kpi = st.columns(2)
     with col_tl:
-        render_timeline_chart(df_to_use, None, metrics.get("takt_time", 0))
+        render_timeline_chart(df_to_use, None, metrics.get("takt", 0))  # FIX: BUG-1 corrección clave takt
     with col_kpi:
         render_kpi_dashboard(metrics, df_to_use)
 
 with col_panel:
-    render_control_panel(df_to_use, metrics)
+    render_control_panel(df_to_use, metrics, available_sec, daily_demand)  # FIX: BUG-2 pasar available_sec y daily_demand
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 render_footer()
